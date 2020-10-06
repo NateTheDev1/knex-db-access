@@ -16,5 +16,8 @@
     "knex schema",
     "sql queries",
     "postgres queries"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
 }
