@@ -1,5 +1,10 @@
+import Knex from 'knex';
+
 class DBAccess {
-  constructor(db, table) {
+  db: Knex<any, unknown[]>;
+  table: string;
+
+  constructor(db: Knex, table: string) {
     this.db = db;
     this.table = table;
   }
@@ -8,15 +13,15 @@ class DBAccess {
     return this.db(this.table);
   }
 
-  findBy(query) {
+  findBy(query: { query: object }) {
     return this.db(this.table).where(query).first();
   }
 
-  create(data) {
+  create(data: { data: object }) {
     return this.db(this.table).insert(data);
   }
 
-  delete(id) {
+  delete(id: { id: string | number }) {
     return this.db(this.table)
       .del()
       .where({ id })
@@ -24,12 +29,12 @@ class DBAccess {
         return true;
       })
       .catch((err) => {
-        console.error(err);
+        throw new Error(err);
         return false;
       });
   }
 
-  deleteBy(query) {
+  deleteBy(query: { query: object }) {
     return this.db(this.table)
       .del()
       .where(query)
@@ -37,7 +42,7 @@ class DBAccess {
         return true;
       })
       .catch((err) => {
-        console.error(err);
+        throw new Error(err);
         return false;
       });
   }
